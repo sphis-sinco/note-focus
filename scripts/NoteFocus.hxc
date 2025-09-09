@@ -13,12 +13,11 @@ class NoteFocus extends Module {
                 });
 	}
 
-        public override function onSongLoaded(event:SongLoadScriptEvent)
+        public override function onCreate(event:ScriptEvent)
         {
-		super.onSongLoaded();
+		super.onCreate();
 
-                PlayState.instance.scoreText.visible = PlayState.instance.isBotplayMode;
-                PlayState.instance.scoreText.x = PlayState.instance.healthBar.x;
+                PlayState.instance.scoreText.visible = false;
 
                 var healthbarYOffset = PlayState.instance.healthBarBG.height - 16;
                 if (Preferences.downscroll) healthbarYOffset = -healthbarYOffset;
