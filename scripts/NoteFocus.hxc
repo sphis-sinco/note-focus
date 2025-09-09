@@ -7,34 +7,25 @@ import funkin.play.PlayState;
 import funkin.Preferences;
 
 class NoteFocus extends Module {
-	var currentState = "";
-	var currentSubState = "";
-
 	function new() {
-		super("note-focus");
+		super("note-focus", {
+                        state: PlayState
+                });
 	}
 
-	function onStateChangeEnd() {
-		super.onStateChangeEnd();
-		var daThing = ReflectUtil.getClassNameOf(FlxG.state).split(".");
+        public override function onSongLoaded(event:SongLoadScriptEvent)
+        {
+		super.onSongLoaded();
 
-		currentState = daThing[daThing.length - 1];
+                PlayState.instance.scoreText.visible = PlayState.instance.isBotplayMode;
 
-		var daThing = ReflectUtil.getClassNameOf(FlxG.state.subState).split(".");
-                currentSubState = daThing[daThing.length - 1];
+                var healthbarYOffset = PlayState.instance.healthBarBG.height - 16;
+                if (Preferences.downscroll) healthbarYOffset = -healthbarYOffset;
+                
+                PlayState.instance.healthBarBG.y = PlayState.instance.playerStrumline.y -= (healthbarYOffset);
+                PlayState.instance.healthBar.y = PlayState.instance.healthBarBG.y + 4;
 
-		if ((currentState == "PlayState" || currentState == "ChartEditorState") && PlayState.instance != null)
-                {
-                        PlayState.instance.scoreText.visible = PlayState.instance.isBotplayMode;
-
-                        var healthbarYOffset = PlayState.instance.healthBarBG.height - 16;
-                        if (Preferences.downscroll) healthbarYOffset = -healthbarYOffset;
-                        
-                        PlayState.instance.healthBarBG.y = PlayState.instance.playerStrumline.y -= (healthbarYOffset);
-                        PlayState.instance.healthBar.y = PlayState.instance.healthBarBG.y + 4;
-
-                        PlayState.instance.iconP1.visible = false;
-                        PlayState.instance.iconP2.visible = false;
-                }
+                PlayState.instance.iconP1.visible = false;
+                PlayState.instance.iconP2.visible = false;
 	}
 }
