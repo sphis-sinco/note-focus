@@ -1,0 +1,31 @@
+import StringTools;
+import flixel.FlxG;
+import funkin.modding.module.Module;
+import funkin.util.Constants;
+import funkin.util.ReflectUtil;
+
+class NoteFocusModVersion extends Module {
+	var yourMainMenuText = "Note Focus v";
+	var versionString = "1.0";
+	var currentState = "";
+
+	function new() {
+		super("note-focus-mod-version");
+	}
+
+	function onStateChangeEnd() {
+		super.onStateChangeEnd();
+		var daThing = ReflectUtil.getClassNameOf(FlxG.state).split(".");
+
+		currentState = daThing[daThing.length - 1];
+		if (currentState == "MainMenuState") {
+			FlxG.state.leftWatermarkText.text += "\n" + yourMainMenuText + versionString;
+			FlxG.state.leftWatermarkText.y -= 15;
+
+			if (!StringTools.contains(FlxG.state.leftWatermarkText.text, "Friday Night Funkin'")) {
+				FlxG.state.leftWatermarkText.text = StringTools.replace(FlxG.state.leftWatermarkText.text, Constants.VERSION,
+					"Friday Night Funkin' " + Constants.VERSION);
+			}
+		}
+	}
+}

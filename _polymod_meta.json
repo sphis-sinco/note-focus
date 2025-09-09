@@ -1,0 +1,14 @@
+{
+        "title": "Note Focus",
+        "description": "Gameplay modifier: moves the healthbar above the notes and removes the score text",
+        "contributors": [
+                {
+                        "name": "Sphis",
+						"role": "Programming, Art/Animation",
+						"url": "https://sphis-sinco.carrd.co"
+                }
+        ],
+        "api_version": "0.7.4",
+        "mod_version": "1.0.0",
+        "license": "CC BY 4.0,MIT"
+}

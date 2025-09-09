@@ -1,0 +1,24 @@
+import StringTools;
+import flixel.FlxG;
+import funkin.modding.module.Module;
+import funkin.util.ReflectUtil;
+import funkin.play.PlayState;
+
+class NoteFocus extends Module {
+	var currentState = "";
+
+	function new() {
+		super("note-focus");
+	}
+
+	function onStateChangeEnd() {
+		super.onStateChangeEnd();
+		var daThing = ReflectUtil.getClassNameOf(FlxG.state).split(".");
+
+		currentState = daThing[daThing.length - 1];
+		if (currentState == "PlayState")
+                {
+                        PlayState.instance.scoreText.visible = false;
+                }
+	}
+}
