@@ -4,6 +4,8 @@ import funkin.modding.module.Module;
 import funkin.util.ReflectUtil;
 import funkin.play.PlayState;
 
+import funkin.Preferences;
+
 class NoteFocus extends Module {
 	var currentState = "";
 
@@ -19,6 +21,12 @@ class NoteFocus extends Module {
 		if (currentState == "PlayState")
                 {
                         PlayState.instance.scoreText.visible = false;
+
+                        var healthbarYOffset = PlayState.instance.healthBarBG.height + 4;
+                        if (Preferences.downscroll) healthbarYOffset = -healthbarYOffset;
+                        
+                        PlayState.instance.healthBarBG.y = PlayState.instance.playerStrumline.y -= (healthbarYOffset);
+                        PlayState.instance.healthBar.y = PlayState.instance.healthBarBG.y + 4;
                 }
 	}
 }
