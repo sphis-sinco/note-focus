@@ -6,6 +6,8 @@ import funkin.util.ReflectUtil;
 import funkin.util.FileUtil;
 import funkin.ui.mainmenu.MainMenuState;
 
+import funkin.input.Controls;
+
 class NoteFocusModVersion extends Module {
 	var disabled_filePath = "modData/noteFocus/disabled.txt";
 
@@ -30,10 +32,9 @@ class NoteFocusModVersion extends Module {
 
 		howTheFuckDoIChangeTheStateOfThisModText =
 					" ("
-					+ "Press ["
-					+ Controls.RESET.name
-					+ "]"
-					+ " to toggle"
+					+ "Press the "
+					+ ((FlxG.random.bool(1)) ? "[[RESET]]" : "reset")
+					+ " key to toggle"
 					+ ")";
 
 		var daThing = ReflectUtil.getClassNameOf(FlxG.state).split(".");
@@ -53,7 +54,7 @@ class NoteFocusModVersion extends Module {
 		else
 			FlxG.state.leftWatermarkText.text += "\n" + enabledText;
 			FlxG.state.leftWatermarkText.text += howTheFuckDoIChangeTheStateOfThisModText;
-		FlxG.state.leftWatermarkText.y -= 15 * 3;
+		FlxG.state.leftWatermarkText.y -= 15 * 2;
 
 		if (!StringTools.contains(FlxG.state.leftWatermarkText.text, "Friday Night Funkin'")) {
 			FlxG.state.leftWatermarkText.text = StringTools.replace(FlxG.state.leftWatermarkText.text, Constants.VERSION,
