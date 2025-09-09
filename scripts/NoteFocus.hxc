@@ -20,7 +20,8 @@ class NoteFocus extends Module {
 		currentState = daThing[daThing.length - 1];
 		if (currentState == "PlayState")
                 {
-                        PlayState.instance.scoreText.visible = false;
+                        if (!PlayState.instance.isBotplayMode)
+                                PlayState.instance.scoreText.visible = false;
 
                         var healthbarYOffset = PlayState.instance.healthBarBG.height - 16;
                         if (Preferences.downscroll) healthbarYOffset = -healthbarYOffset;
