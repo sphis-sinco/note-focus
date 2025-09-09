@@ -12,8 +12,8 @@ class NoteFocusModVersion extends Module {
 	var yourMainMenuText = "Note Focus v";
 	var versionString = "1.0";
 	
-	var disabledText = " * Disabled\n   * remove the content of the " + disabled_filePath + " to change this";
-	var enabledText = " * Enabled\n    * add content to the " + disabled_filePath + " to change this";
+	var disabledText = " * Disabled\n | remove the content of the " + disabled_filePath + " to change this";
+	var enabledText = " * Enabled\n  | add content to the " + disabled_filePath + " to change this";
 
 	var currentState = "";
 
