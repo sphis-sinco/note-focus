@@ -23,10 +23,7 @@ class NoteFocus extends Module {
 		var daThing = ReflectUtil.getClassNameOf(FlxG.state.subState).split(".");
                 currentSubState = daThing[daThing.length - 1];
 
-                trace(currentState);
-                trace(currentSubState);
-
-		if (currentState == "PlayState" || currentSubState == "PlayState")
+		if ((currentState == "PlayState" || currentState == "ChartEditorState") && PlayState.instance != null)
                 {
                         PlayState.instance.scoreText.visible = PlayState.instance.isBotplayMode;
 
