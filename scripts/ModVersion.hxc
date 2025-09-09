@@ -3,15 +3,18 @@ import flixel.FlxG;
 import funkin.modding.module.Module;
 import funkin.util.Constants;
 import funkin.util.ReflectUtil;
+import funkin.util.FileUtil;
 import funkin.ui.mainmenu.MainMenuState;
 
 class NoteFocusModVersion extends Module {
+	var disabled_filePath = "modData/noteFocus/disabled.txt";
+
 	var yourMainMenuText = "Note Focus v";
 	var versionString = "1.0";
 	
-	var disabledText = " * Disabled: remove the content of the data/note-focus-disabled.txt to change this";
-	var enabledText = " * Enabled: add content to the data/note-focus-disabled.txt to change this";
-	
+	var disabledText = " * Disabled\n   * remove the content of the " + disabled_filePath + " to change this";
+	var enabledText = " * Enabled\n    * add content to the " + disabled_filePath + " to change this";
+
 	var currentState = "";
 
 	function new() {
@@ -27,9 +30,9 @@ class NoteFocusModVersion extends Module {
 		currentState = daThing[daThing.length - 1];
 
 		var data:String = '';
-		if (!FileUtil.fileExists(Paths.txt('note-focus-disabled')))
-			FileUtil.writeStringToPath(Paths.txt('note-focus-disabled'), '');
-		data = Assets.getText(Paths.txt('note-focus-disabled'));
+		FileUtil.writeStringToPath(disabled_filePath, 'disabled');
+
+		data = StringTools.replace(FileUtil.readStringFromPath(disabled_filePath), ' ', '');
 		trace('Note-Focus-Disabled text contents: ' + data);
 
 		FlxG.state.leftWatermarkText.text += "\n" + yourMainMenuText + versionString;
@@ -37,7 +40,7 @@ class NoteFocusModVersion extends Module {
 			FlxG.state.leftWatermarkText.text += "\n" + disabledText;
 		else
 			FlxG.state.leftWatermarkText.text += "\n" + enabledText;
-		FlxG.state.leftWatermarkText.y -= 30;
+		FlxG.state.leftWatermarkText.y -= 15 * 3;
 
 		if (!StringTools.contains(FlxG.state.leftWatermarkText.text, "Friday Night Funkin'")) {
 			FlxG.state.leftWatermarkText.text = StringTools.replace(FlxG.state.leftWatermarkText.text, Constants.VERSION,
