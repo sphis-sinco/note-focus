@@ -14,7 +14,9 @@ class NoteFocusModVersion extends Module {
 	var currentState = "";
 
 	function new() {
-		super("note-focus-mod-version");
+		super("note-focus-mod-version", {
+			state: funkin.ui.mainmenu.MainMenuState
+		});
 	}
 
 	function onStateChangeEnd() {
@@ -29,18 +31,16 @@ class NoteFocusModVersion extends Module {
 		data = Assets.getText(Paths.txt('note-focus-disabled'));
 		trace('Note-Focus-Disabled text contents: ' + data);
 
-		if (currentState == "MainMenuState") {
-			FlxG.state.leftWatermarkText.text += "\n" + yourMainMenuText + versionString;
-			if (data != null || data != '')
-				FlxG.state.leftWatermarkText.text += "\n" + disabledText;
-			else
-				FlxG.state.leftWatermarkText.text += "\n" + enabledText;
-			FlxG.state.leftWatermarkText.y -= 30;
+		FlxG.state.leftWatermarkText.text += "\n" + yourMainMenuText + versionString;
+		if (data != null || data != '')
+			FlxG.state.leftWatermarkText.text += "\n" + disabledText;
+		else
+			FlxG.state.leftWatermarkText.text += "\n" + enabledText;
+		FlxG.state.leftWatermarkText.y -= 30;
 
-			if (!StringTools.contains(FlxG.state.leftWatermarkText.text, "Friday Night Funkin'")) {
-				FlxG.state.leftWatermarkText.text = StringTools.replace(FlxG.state.leftWatermarkText.text, Constants.VERSION,
-					"Friday Night Funkin' " + Constants.VERSION);
-			}
+		if (!StringTools.contains(FlxG.state.leftWatermarkText.text, "Friday Night Funkin'")) {
+			FlxG.state.leftWatermarkText.text = StringTools.replace(FlxG.state.leftWatermarkText.text, Constants.VERSION,
+				"Friday Night Funkin' " + Constants.VERSION);
 		}
 	}
 }
