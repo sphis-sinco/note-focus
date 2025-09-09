@@ -12,8 +12,10 @@ class NoteFocusModVersion extends Module {
 	var yourMainMenuText = "Note Focus v";
 	var versionString = "1.0";
 	
-	var disabledText = " * Disabled\n | remove the content of the " + disabled_filePath + " to change this";
-	var enabledText = " * Enabled\n  | add content to the " + disabled_filePath + " to change this";
+	var disabledText = " * Disabled";
+	var enabledText = " * Enabled";
+
+	var howTheFuckDoIChangeTheStateOfThisModText = "";
 
 	var currentState = "";
 
@@ -25,9 +27,19 @@ class NoteFocusModVersion extends Module {
 
 	function onStateChangeEnd() {
 		super.onStateChangeEnd();
-		var daThing = ReflectUtil.getClassNameOf(FlxG.state).split(".");
 
+		howTheFuckDoIChangeTheStateOfThisModText =
+					" ("
+					+ "Press ["
+					+ Controls.RESET.name
+					+ "]"
+					+ " to toggle"
+					+ ")";
+
+		var daThing = ReflectUtil.getClassNameOf(FlxG.state).split(".");
 		currentState = daThing[daThing.length - 1];
+
+		if (currentState != "MainMenuState") return;
 
 		var data:String = '';
 		FileUtil.writeStringToPath(disabled_filePath, 'disabled');
@@ -40,6 +52,7 @@ class NoteFocusModVersion extends Module {
 			FlxG.state.leftWatermarkText.text += "\n" + disabledText;
 		else
 			FlxG.state.leftWatermarkText.text += "\n" + enabledText;
+			FlxG.state.leftWatermarkText.text += howTheFuckDoIChangeTheStateOfThisModText;
 		FlxG.state.leftWatermarkText.y -= 15 * 3;
 
 		if (!StringTools.contains(FlxG.state.leftWatermarkText.text, "Friday Night Funkin'")) {
