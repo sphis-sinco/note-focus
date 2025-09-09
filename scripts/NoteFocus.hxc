@@ -18,6 +18,7 @@ class NoteFocus extends Module {
 		super.onSongLoaded();
 
                 PlayState.instance.scoreText.visible = PlayState.instance.isBotplayMode;
+                PlayState.instance.scoreText.x = PlayState.instance.healthBar.x;
 
                 var healthbarYOffset = PlayState.instance.healthBarBG.height - 16;
                 if (Preferences.downscroll) healthbarYOffset = -healthbarYOffset;
