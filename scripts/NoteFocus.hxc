@@ -12,10 +12,10 @@ class NoteFocus extends Module {
                         state: PlayState
                 });
 	}
-
-        public override function onCreate(event:ScriptEvent)
+        
+        public override function onSongLoaded(event:SongLoadScriptEvent)
         {
-		super.onCreate();
+		super.onSongLoaded();
 
                 PlayState.instance.scoreText.visible = false;
 
