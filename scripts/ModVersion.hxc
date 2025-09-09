@@ -3,6 +3,7 @@ import flixel.FlxG;
 import funkin.modding.module.Module;
 import funkin.util.Constants;
 import funkin.util.ReflectUtil;
+import funkin.ui.mainmenu.MainMenuState;
 
 class NoteFocusModVersion extends Module {
 	var yourMainMenuText = "Note Focus v";
@@ -15,7 +16,7 @@ class NoteFocusModVersion extends Module {
 
 	function new() {
 		super("note-focus-mod-version", {
-			state: funkin.ui.mainmenu.MainMenuState
+			state: MainMenuState
 		});
 	}
 
