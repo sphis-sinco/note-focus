@@ -10,10 +10,10 @@ import funkin.ui.mainmenu.MainMenuState;
 import funkin.input.Controls;
 
 class NoteFocusModVersion extends Module {
-	var disabled_filePath = "modData/noteFocus/disabled.txt";
+	var disabled_filePath = "modData/minimalUI/disabled.txt";
 	var disabled = false;
 
-	var yourMainMenuText = "Note Focus v";
+	var yourMainMenuText = "Minimal UI v";
 	var versionString = "1.0";
 	
 	var disabledText = ": Disabled";
