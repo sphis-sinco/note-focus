@@ -4,6 +4,7 @@ import funkin.modding.module.Module;
 import funkin.util.Constants;
 import funkin.util.ReflectUtil;
 import funkin.util.FileUtil;
+import funkin.util.FileWriteMode;
 import funkin.ui.mainmenu.MainMenuState;
 
 import funkin.input.Controls;
@@ -15,8 +16,8 @@ class NoteFocusModVersion extends Module {
 	var yourMainMenuText = "Note Focus v";
 	var versionString = "1.0";
 	
-	var disabledText = " * Disabled";
-	var enabledText = " * Enabled";
+	var disabledText = ": Disabled";
+	var enabledText = ": Enabled";
 
 	var howTheFuckDoIChangeTheStateOfThisModText = "";
 
@@ -44,23 +45,28 @@ class NoteFocusModVersion extends Module {
 		if (currentState != "MainMenuState") return;
 
 		var data:String = '';
-		if (!FileUtil.fileExists(disabled_filePath))
-			FileUtil.writeStringToPath(disabled_filePath, 'disabled');
 
 		data = StringTools.replace(FileUtil.readStringFromPath(disabled_filePath), ' ', '');
-		trace('Note-Focus-Disabled text contents: ' + data);
+		if (data == null)
+		{
+			data = '';
+			FileUtil.writeStringToPath(disabled_filePath, '', FileWriteMode.Force);
+		}
+		trace('Note-Focus-Disabled text contents: "' + data+'"');
 
 		FlxG.state.leftWatermarkText.text += "\n" + yourMainMenuText + versionString;
-		disabled = false;
-		if (data != null || data != '')
-		{
-			FlxG.state.leftWatermarkText.text += "\n" + disabledText;
-			disabled = true;
-		}
+
+		disabled = true;
+		if (data == '')
+			disabled = false;
+
+		if (disabled)
+			FlxG.state.leftWatermarkText.text += disabledText;
 		else
-			FlxG.state.leftWatermarkText.text += "\n" + enabledText;
-			FlxG.state.leftWatermarkText.text += howTheFuckDoIChangeTheStateOfThisModText;
-		FlxG.state.leftWatermarkText.y -= 15 * 2;
+			FlxG.state.leftWatermarkText.text += enabledText;
+
+		FlxG.state.leftWatermarkText.text += howTheFuckDoIChangeTheStateOfThisModText;
+		FlxG.state.leftWatermarkText.y -= 15 * 1;
 
 		if (!StringTools.contains(FlxG.state.leftWatermarkText.text, "Friday Night Funkin'")) {
 			FlxG.state.leftWatermarkText.text = StringTools.replace(FlxG.state.leftWatermarkText.text, Constants.VERSION,
@@ -78,9 +84,9 @@ class NoteFocusModVersion extends Module {
 			trace("MY MY IT LOOKS LIKE MY [[FAVORITE CUSTOMER]] doesn't want to play anymore...");
 
 			if (disabled)
-				FileUtil.writeStringToPath(disabled_filePath, '');
+				FileUtil.writeStringToPath(disabled_filePath, '', FileWriteMode.Force);
 			else
-				FileUtil.writeStringToPath(disabled_filePath, 'disabled');
+				FileUtil.writeStringToPath(disabled_filePath, 'disabled', FileWriteMode.Force);
 
 			FlxG.resetState();
 		}
