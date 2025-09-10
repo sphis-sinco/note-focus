@@ -46,6 +46,7 @@ class MinimalUIModVersion extends Module {
 
 		var data:String = '';
 
+		FileUtil.writeStringToPath(disabled_filePath, '', FileWriteMode.Skip);
 		data = StringTools.replace(FileUtil.readStringFromPath(disabled_filePath), ' ', '');
 		if (data == null)
 		{
