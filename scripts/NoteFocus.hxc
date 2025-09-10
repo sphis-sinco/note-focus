@@ -10,6 +10,10 @@ import funkin.util.FileWriteMode;
 
 import funkin.Preferences;
 
+import funkin.save.Save;
+
+import funkin.play.notes.Strumline;
+
 class NoteFocus extends Module {
 	function new() {
 		super("note-focus", {
@@ -22,28 +26,22 @@ class NoteFocus extends Module {
 		super.onSongLoaded();
 
                 var modver:Module = ModuleHandler.getModule('note-focus-mod-version');
-                var data:String = '';
-
-		data = StringTools.replace(FileUtil.readStringFromPath(modver.disabled_filePath), ' ', '');
-		if (data == null)
-		{
-			data = '';
-			FileUtil.writeStringToPath(disabled_filePath, '', FileWriteMode.Force);
-		}
-		trace('Note-Focus-Disabled text contents: "' + data+'"');
-                var disabled = true;
-
-                if (data == '')
-                        disabled = false;
-
-                if (disabled) return;
+                if (modver.disabled) return;
 
                 PlayState.instance.scoreText.visible = false;
 
-                var healthbarYOffset = PlayState.instance.healthBarBG.height - 16;
-                if (Preferences.downscroll) healthbarYOffset = -healthbarYOffset;
+                var healthbarYOffset = 0;
                 
-                PlayState.instance.healthBarBG.y = PlayState.instance.playerStrumline.y -= (healthbarYOffset);
+                if (Preferences.downscroll)
+                {
+                        healthbarYOffset = -(Strumline.STRUMLINE_SIZE + PlayState.instance.healthBarBG.height + 24);
+                        trace('Downscroll');
+                } else {
+                        healthbarYOffset = 3;
+                        trace('Upscroll');
+                }
+
+                PlayState.instance.healthBarBG.y = PlayState.instance.playerStrumline.y - (healthbarYOffset);
                 PlayState.instance.healthBar.y = PlayState.instance.healthBarBG.y + 4;
 
                 PlayState.instance.iconP1.visible = false;
