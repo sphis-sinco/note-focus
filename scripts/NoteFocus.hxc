@@ -1,8 +1,12 @@
 import StringTools;
 import flixel.FlxG;
 import funkin.modding.module.Module;
+import funkin.modding.module.ModuleHandler;
 import funkin.util.ReflectUtil;
 import funkin.play.PlayState;
+
+import funkin.util.FileUtil;
+import funkin.util.FileWriteMode;
 
 import funkin.Preferences;
 
@@ -12,10 +16,27 @@ class NoteFocus extends Module {
                         state: PlayState
                 });
 	}
-        
+
         public override function onSongLoaded(event:SongLoadScriptEvent)
         {
 		super.onSongLoaded();
+
+                var modver:Module = ModuleHandler.getModule('note-focus-mod-version');
+                var data:String = '';
+
+		data = StringTools.replace(FileUtil.readStringFromPath(modver.disabled_filePath), ' ', '');
+		if (data == null)
+		{
+			data = '';
+			FileUtil.writeStringToPath(disabled_filePath, '', FileWriteMode.Force);
+		}
+		trace('Note-Focus-Disabled text contents: "' + data+'"');
+                var disabled = true;
+
+                if (data == '')
+                        disabled = false;
+
+                if (disabled) return;
 
                 PlayState.instance.scoreText.visible = false;
 
