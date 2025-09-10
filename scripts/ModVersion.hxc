@@ -10,6 +10,7 @@ import funkin.input.Controls;
 
 class NoteFocusModVersion extends Module {
 	var disabled_filePath = "modData/noteFocus/disabled.txt";
+	var disabled = false;
 
 	var yourMainMenuText = "Note Focus v";
 	var versionString = "1.0";
@@ -32,9 +33,9 @@ class NoteFocusModVersion extends Module {
 
 		howTheFuckDoIChangeTheStateOfThisModText =
 					" ("
-					+ "Press the "
-					+ ((FlxG.random.bool(1)) ? "[[RESET]]" : "reset")
-					+ " key to toggle"
+					+ "Press "
+					+ ((FlxG.random.bool(1)) ? "[[F12]]" : "f12")
+					+ " to toggle"
 					+ ")";
 
 		var daThing = ReflectUtil.getClassNameOf(FlxG.state).split(".");
@@ -43,14 +44,19 @@ class NoteFocusModVersion extends Module {
 		if (currentState != "MainMenuState") return;
 
 		var data:String = '';
-		FileUtil.writeStringToPath(disabled_filePath, 'disabled');
+		if (!FileUtil.fileExists(disabled_filePath))
+			FileUtil.writeStringToPath(disabled_filePath, 'disabled');
 
 		data = StringTools.replace(FileUtil.readStringFromPath(disabled_filePath), ' ', '');
 		trace('Note-Focus-Disabled text contents: ' + data);
 
 		FlxG.state.leftWatermarkText.text += "\n" + yourMainMenuText + versionString;
+		disabled = false;
 		if (data != null || data != '')
+		{
 			FlxG.state.leftWatermarkText.text += "\n" + disabledText;
+			disabled = true;
+		}
 		else
 			FlxG.state.leftWatermarkText.text += "\n" + enabledText;
 			FlxG.state.leftWatermarkText.text += howTheFuckDoIChangeTheStateOfThisModText;
@@ -59,6 +65,24 @@ class NoteFocusModVersion extends Module {
 		if (!StringTools.contains(FlxG.state.leftWatermarkText.text, "Friday Night Funkin'")) {
 			FlxG.state.leftWatermarkText.text = StringTools.replace(FlxG.state.leftWatermarkText.text, Constants.VERSION,
 				"Friday Night Funkin' " + Constants.VERSION);
+		}
+	}
+
+	function onUpdate(event:UpdateScriptEvent)
+	{
+		super.onUpdate();
+		if (currentState != "MainMenuState") return;
+
+		if (FlxG.keys.justReleased.F12)
+		{
+			trace("MY MY IT LOOKS LIKE MY [[FAVORITE CUSTOMER]] doesn't want to play anymore...");
+
+			if (disabled)
+				FileUtil.writeStringToPath(disabled_filePath, '');
+			else
+				FileUtil.writeStringToPath(disabled_filePath, 'disabled');
+
+			FlxG.resetState();
 		}
 	}
 }
