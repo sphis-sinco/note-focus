@@ -24,7 +24,7 @@ class NoteFocusModVersion extends Module {
 	var currentState = "";
 
 	function new() {
-		super("note-focus-mod-version", {
+		super("minimal-ui-mod-version", {
 			state: MainMenuState
 		});
 	}
@@ -52,7 +52,7 @@ class NoteFocusModVersion extends Module {
 			data = '';
 			FileUtil.writeStringToPath(disabled_filePath, '', FileWriteMode.Force);
 		}
-		trace('Note-Focus-Disabled text contents: "' + data+'"');
+		trace('minimal-ui-Disabled text contents: "' + data+'"');
 
 		FlxG.state.leftWatermarkText.text += "\n" + yourMainMenuText + versionString;
 
